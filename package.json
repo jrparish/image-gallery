@@ -1,0 +1,40 @@
+{
+  "name": "image-gallery",
+  "version": "0.0.0",
+  "description": "Image Gallery using AngularJS 1.5",
+  "repository": {
+    "type": "git",
+    "url": "git+https://jrparish@github.com/jrparish/image-gallery.git"
+  },
+  "author": "Jacob Parish",
+  "license": "MIT",
+  "private": true,
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node webpack.server.js"
+  },
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-ui-router": "^1.0.0-beta.3",
+    "font-awesome": "^4.7.0",
+    "lodash": "^4.16.4",
+    "moment": "^2.15.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.18.0",
+    "babel-loader": "^6.2.6",
+    "babel-plugin-angularjs-annotate": "^0.6.0",
+    "babel-plugin-transform-class-properties": "^6.18.0",
+    "babel-plugin-transform-object-assign": "^6.8.0",
+    "babel-plugin-transform-object-rest-spread": "^6.16.0",
+    "css-loader": "^0.25.0",
+    "html-loader": "^0.4.4",
+    "html-webpack-plugin": "^2.24.0",
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
+    "style-loader": "^0.13.1",
+    "webpack": "^2.1.0-beta.25",
+    "webpack-dev-server": "^2.1.0-beta.9"
+  }
+}
