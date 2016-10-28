@@ -1,0 +1,12 @@
+{
+  "presets": [
+    ["es2015", { "modules": false }]
+  ],
+  "plugins": [
+    "transform-class-properties",
+    "transform-object-rest-spread",
+    "transform-object-assign",
+    "transform-async-to-generator",
+    "angularjs-annotate"
+  ]
+}
