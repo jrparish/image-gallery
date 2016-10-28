@@ -32,7 +32,8 @@ const app = angular
           comments: 'comments'
         },
         resolve: {
-          image: (ImageService, $stateParams) => ImageService.get($stateParams.id)
+          image: (ImageService, $stateParams) => ImageService.get($stateParams.id),
+          comments: (CommentService, $stateParams) => CommentService.list($stateParams.id)
         }
       });
   })
