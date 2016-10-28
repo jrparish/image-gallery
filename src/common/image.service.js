@@ -1,21 +1,33 @@
+import find from 'lodash/find';
 
-const IMAGE_COUNT = 30;     // Number of images to display
-const PRELOAD_THRESHOLD = IMAGE_COUNT < 200 ? (IMAGE_COUNT / 2) : 100;   // Number of images to preload before displaying
+const IMAGE_COUNT = 20;     // Number of images to display
+const PRELOAD_THRESHOLD = 20;   // Number of images to preload before displaying
 const IMAGE_URL_PREFIX = 'https://unsplash.it';
 const IMAGE_API_URL = `${IMAGE_URL_PREFIX}/list`;
 
 class ImageService {
+
+  images = [];
 
   /* @ngInject */
   constructor($http, $q) {
     Object.assign(this, { $http, $q });
   }
 
+  // Fetches a list of images, preloads them, and stores the images on the service
   fetch() {
     return this.$http.get(IMAGE_API_URL)
       .then(imageResponse => this.generateImageList(imageResponse.data))
-      .then(images => this.preload(images))
+      .then(images => (this.images = images))
       .catch(err => this.$q.reject(err));
+  }
+
+  // Returns the image at the specified id
+  get(id) {
+    if (!id) {
+      return {};
+    }
+    return find(this.images, { id: Number(id) }) || {};
   }
 
   // Transforms the image response into the json we need
@@ -23,16 +35,19 @@ class ImageService {
     return images
       .map(image => ({
         id: image.id,
-        url: `${IMAGE_URL_PREFIX}/800/800?image=${image.id}`
+        url: `${IMAGE_URL_PREFIX}/800/800?image=${image.id}`,
+        rotation: 0
       }))
-      .slice(0, IMAGE_COUNT - 1);
+      .slice(0, IMAGE_COUNT);
   }
 
   // Preloads the images so we don't get choppy rendering
-  // Returns a promise that resolves after all images have finished loading
-  preload(images) {
+  // Returns a promise that resolves after threshold number of images
+  // have been loaded
+  preload() {
     let deferred = this.$q.defer();
     let loaded = 0;
+    const images = this.images;
 
     images.forEach(image => {
       angular

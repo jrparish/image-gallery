@@ -4,9 +4,15 @@
   .thumbnail-container {
     display: inline-flex;
     text-align: center;
+    padding: 5px;
+
+    &.active {
+      border: 5px solid red;
+      padding: 0px;
+    }
 
     .thumbnail {
-      padding: 15px;
+      padding: 10px;
       max-width: 150px;
       max-height: 150px;
     }

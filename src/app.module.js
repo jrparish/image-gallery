@@ -19,12 +19,21 @@ const app = angular
         views: {
           gallery: 'gallery',
           workspace: 'workspace'
+        },
+        resolve: {
+          images: ImageService => ImageService.fetch()
         }
       })
       .state({
         name: 'gallery.image',
         url: '/images/:id',
-        component: 'image'
+        views: {
+          image: 'imageEdit',
+          comments: 'comments'
+        },
+        resolve: {
+          image: (ImageService, $stateParams) => ImageService.get($stateParams.id)
+        }
       });
   })
   .name;

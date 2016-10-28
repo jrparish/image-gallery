@@ -1,0 +1,33 @@
+.image-edit {
+  padding: 15px;
+  text-align: center;
+
+  .image {
+    max-width: 400px;
+    max-height: 400px;
+    box-shadow: 5px 5px grey;
+
+    &.rotate-1 {
+      transform: rotate(90deg);
+      box-shadow: 5px -5px grey;
+    }
+    &.rotate-2 {
+      transform: rotate(180deg);
+      box-shadow: -5px -5px grey;
+    }
+    &.rotate-3 {
+      transform: rotate(270deg);
+      box-shadow: -5px 5px grey;
+    }
+  }
+
+  .rotate-container {
+    margin-top: 20px;
+
+    .rotate-btn {
+      border: 3px solid darkslategrey;
+      padding: 10px;
+      box-shadow: 3px 3px grey;
+    }
+  }
+}
