@@ -23,10 +23,10 @@ class GalleryController {
 const GalleryComponent = {
   controller: GalleryController,
   template:  `
-    <div class="gallery">
+    <div>
       <div ng-show="$ctrl.loading">Loading Images...</div>
       <div ng-repeat="image in $ctrl.images track by image.id" class="thumbnail-container">
-        <img ng-src="{{image.url}}" class="thumbnail">
+        <img ng-src="{{image.url}}" class="thumbnail" ui-sref="gallery.image({ id: image.id })">
       </div>
     </div>
   `

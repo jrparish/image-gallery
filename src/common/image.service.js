@@ -1,5 +1,6 @@
 
-const IMAGE_COUNT = 50;
+const IMAGE_COUNT = 30;     // Number of images to display
+const PRELOAD_THRESHOLD = IMAGE_COUNT < 200 ? (IMAGE_COUNT / 2) : 100;   // Number of images to preload before displaying
 const IMAGE_URL_PREFIX = 'https://unsplash.it';
 const IMAGE_API_URL = `${IMAGE_URL_PREFIX}/list`;
 
@@ -37,7 +38,7 @@ class ImageService {
       angular
         .element(new Image())
         .bind('load error', () => {
-          if (++loaded >= images.length) {
+          if (++loaded >= PRELOAD_THRESHOLD) {
             deferred.resolve(images);
           }
         })

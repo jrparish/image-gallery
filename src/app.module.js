@@ -1,12 +1,14 @@
 import uiRouter from 'angular-ui-router';
 import AppComponent from './app.component';
 import Components from './components';
+import Common from './common';
 import './app.less';
 
 const app = angular
   .module('app', [
     uiRouter,
-    Components
+    Components,
+    Common
   ])
   .component('app', AppComponent)
   .config($stateProvider => {
@@ -14,7 +16,10 @@ const app = angular
       .state({
         name: 'gallery',
         url: '',
-        component: 'gallery'
+        views: {
+          gallery: 'gallery',
+          workspace: 'workspace'
+        }
       })
       .state({
         name: 'gallery.image',

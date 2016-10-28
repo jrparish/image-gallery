@@ -1,10 +1,24 @@
-html {
-  height: 100%;
-  position: relative;
-}
-
-body {
+html, body {
   font-family: 'Trebuchet MS', sans-serif;
   height: 100%;
+  padding: 0;
+  margin: 0;
 }
 
+.main {
+  height: 100%;
+  display: flex;
+  flex-flow: row;
+  align-items: stretch;
+
+  .gallery {
+    order: 1;
+    width: 50%;
+    overflow-y: scroll;
+  }
+
+  .workspace {
+    order: 2;
+    width: 50%;
+  }
+}

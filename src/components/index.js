@@ -1,8 +1,10 @@
 import Gallery from './gallery';
+import Workspace from './workspace';
 
 const components = angular
   .module('components', [
-    Gallery
+    Gallery,
+    Workspace
   ])
   .name;
 
