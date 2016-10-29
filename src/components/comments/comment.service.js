@@ -1,12 +1,10 @@
-const COMMENT_API_URL = 'http://www.mocky.io/v2/5813dbcd1000007f07abb092';
-
 class CommentService {
 
   comments = [];
 
   /* @ngInject */
-  constructor($http) {
-    this.$http = $http;
+  constructor($http, $q) {
+    Object.assign(this, { $http, $q });
   }
 
   // Return a list of comments for the given imageId
@@ -14,16 +12,17 @@ class CommentService {
     return this.comments.filter(comment => comment.imageId === imageId);
   }
 
+  // Saves the comment to the server and adds it to the comments list
   add(comment) {
-    return $http.post(COMMENT_API_URL, comment)
-      .then(() => {
-        // create a dummy id since we're not actually hitting a backend
-        const updatedComment = { id: comments.length + 1, ...comment };
-        comments.push(updatedComment);
-        return updatedComment;
+    // since this is going to fail without a backend, modifying the catch to
+    // ensure success!
+    return this.$http.post(`/api/images/${comment.imageId}/comments`, comment)
+      .catch(() => {
+        const updatedComment = { id: this.comments.length + 1, ...comment };
+        this.comments.push(updatedComment);
+        return this.$q.resolve(updatedComment);
       });
   }
-
 
 }
 

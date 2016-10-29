@@ -1,6 +1,6 @@
 import find from 'lodash/find';
 
-const IMAGE_COUNT = 20;     // Number of images to display
+const IMAGE_COUNT = 5;     // Number of images to display
 const PRELOAD_THRESHOLD = 100;   // Number of images to preload before displaying
 const IMAGE_URL_PREFIX = 'https://unsplash.it';
 const IMAGE_API_URL = `${IMAGE_URL_PREFIX}/list`;
@@ -16,6 +16,11 @@ class ImageService {
 
   // Fetches a list of images, stores the images on the service, then starts to preload them
   fetch() {
+    // No need to fetch and parse this large list more than once
+    if (this.images.length) {
+      return this.$q.resolve(this.images);
+    }
+
     return this.$http.get(IMAGE_API_URL)
       .then(imageResponse => this.generateImageList(imageResponse.data))
       .then(images => (this.images = images))

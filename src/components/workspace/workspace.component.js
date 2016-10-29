@@ -1,10 +1,5 @@
 
-class WorkspaceController {
-
-}
-
 const WorkspaceComponent = {
-  controller: WorkspaceController,
   template: `
     <ui-view name="image">
       Select an image...

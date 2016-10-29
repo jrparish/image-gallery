@@ -3,7 +3,7 @@ class ImageEditController {
 
   /* @ngInject */
   constructor(ImageService) {
-    this.ImageService = ImageService;
+    Object.assign(this, { ImageService });
   }
 
   rotate() {
