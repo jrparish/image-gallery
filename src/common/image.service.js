@@ -1,7 +1,7 @@
 import find from 'lodash/find';
 
-const IMAGE_COUNT = 5;     // Number of images to display
-const PRELOAD_THRESHOLD = 100;   // Number of images to preload before displaying
+const IMAGE_COUNT = 200;     // Number of images to display
+const PRELOAD_THRESHOLD = 20;   // Number of images to preload at a time
 const IMAGE_URL_PREFIX = 'https://unsplash.it';
 const IMAGE_API_URL = `${IMAGE_URL_PREFIX}/list`;
 
@@ -24,8 +24,10 @@ class ImageService {
     return this.$http.get(IMAGE_API_URL)
       .then(imageResponse => this.generateImageList(imageResponse.data))
       .then(images => (this.images = images))
-      .then(images => this.preload(images))
-      .catch(err => this.$q.reject(err));
+      .catch(err => this.$q.reject(err))
+      .finally(() => {
+        this.startPreload();
+      });
   }
 
   // Returns the image at the specified id
@@ -41,10 +43,24 @@ class ImageService {
     return images
       .map(image => ({
         id: image.id,
-        url: `${IMAGE_URL_PREFIX}/800/800?image=${image.id}`,
-        rotation: 0
+        url: `${IMAGE_URL_PREFIX}/600/600?image=${image.id}`,
+        rotation: 0,
+        loaded: false
       }))
       .slice(0, IMAGE_COUNT);
+  }
+
+  // Initiates the image preloading process
+  // Recursively preloads images until all images are loaded
+  startPreload(startIdx = 0) {
+    const nextImageSet = this.images.slice(startIdx, startIdx += 30);
+
+    if (!nextImageSet.length) {
+      return;
+    }
+
+    return this.preload(nextImageSet)
+      .then(() => this.startPreload(startIdx));
   }
 
   // Preloads the images so we don't get choppy rendering
@@ -52,18 +68,18 @@ class ImageService {
   // have been loaded
   preload(images = []) {
     const deferred = this.$q.defer();
-    const threshold = PRELOAD_THRESHOLD < IMAGE_COUNT ? PRELOAD_THRESHOLD : IMAGE_COUNT;
     let loaded = 0;
 
     if (!images.length) {
       deferred.resolve(images);
     }
 
-    images.forEach(image => {
+    images.map(image => {
       angular
         .element(new Image())
         .bind('load error', () => {
-          if (++loaded >= threshold) {
+          image.loaded = true;
+          if (++loaded >= images.length) {
             deferred.resolve(images);
           }
         })

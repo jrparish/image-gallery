@@ -41,12 +41,12 @@ const CommentsComponent = {
     <div class="comments" ng-show="$ctrl.image.url">
       <h2>Comments</h2>
       <ul class="comment-container">
-        <li class="comment" ng-repeat="comment in $ctrl.comments">
+        <li class="comment" ng-repeat="comment in $ctrl.comments track by comment.id">
           <div class="user-info">
-            <div class="username">By {{comment.name}}</div>
-            <div class="timestamp">{{comment.date | date : 'short'}}</div>
+            <div class="username">By {{::comment.name}}</div>
+            <div class="timestamp">{{::comment.date | date : 'short'}}</div>
           </div>
-          <div class="content">{{comment.text}}</div>
+          <div class="content">{{::comment.text}}</div>
         </li>
         <li class="comment no-content" ng-show="!$ctrl.comments.length">
           There are no comments yet.
