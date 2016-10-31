@@ -1,6 +1,6 @@
 import find from 'lodash/find';
 
-const IMAGE_COUNT = 200;     // Number of images to display
+const IMAGE_COUNT = 100;     // Number of images to display
 const PRELOAD_THRESHOLD = 20;   // Number of images to preload at a time
 const IMAGE_URL_PREFIX = 'https://unsplash.it';
 const IMAGE_API_URL = `${IMAGE_URL_PREFIX}/list`;
